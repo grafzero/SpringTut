@@ -23,12 +23,9 @@ public class TweetController {
     @RequestMapping ("/")
     public String hello(@RequestParam(value="search", defaultValue="Andrzej Duda") String search, Model model){
         SearchResults sr = twitter.searchOperations().search(search);
-        List<String> tweets = sr.getTweets()
-                .stream()
-                .map(Tweet::getText)
-                .collect(Collectors.toList());
-       
+        List<Tweet> tweets = sr.getTweets();
         model.addAttribute("tweets", tweets);
+        model.addAttribute("search", search);
     return "resultPage";
     }
     
