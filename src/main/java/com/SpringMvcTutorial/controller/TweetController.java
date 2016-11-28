@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.SpringMvcTutorial.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.SearchResults;
+import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +23,12 @@ public class TweetController {
     @RequestMapping ("/")
     public String hello(@RequestParam(value="search", defaultValue="Andrzej Duda") String search, Model model){
         SearchResults sr = twitter.searchOperations().search(search);
-        String text = sr.getTweets().get(0).getText();
-        model.addAttribute("message", text);
+        List<String> tweets = sr.getTweets()
+                .stream()
+                .map(Tweet::getText)
+                .collect(Collectors.toList());
+       
+        model.addAttribute("tweets", tweets);
     return "resultPage";
     }
     

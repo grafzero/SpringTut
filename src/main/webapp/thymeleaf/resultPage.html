@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="pl"></head>
+    <head lang="pl">
+        <title>Witaj w Twitterze!</title>       
+    </head>
+
 <body>
-<span th:text="${message}">Witaj w HTML!</span>
+    <ul>
+        <li th:each="tweet : ${tweets}" th:text="${tweet}">Tweet</li>
+    </ul>
+
 </body>
 </html>
