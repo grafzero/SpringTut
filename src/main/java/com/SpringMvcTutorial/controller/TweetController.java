@@ -11,23 +11,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 /**
  *
  * @author Maciek Slotwinski (maciekslotwinski@gmail.com)
  */
 @Controller
 public class TweetController {
-   @Autowired
-   private Twitter twitter;
-    @RequestMapping ("/")
-    public String hello(@RequestParam(value="search", defaultValue="Andrzej Duda") String search, Model model){
+
+    @Autowired
+    private Twitter twitter;
+
+    @RequestMapping("/")
+    public String home() {
+        return "searchPage";
+    }
+
+    @RequestMapping("/result")
+    public String hello(@RequestParam(value = "search", defaultValue = "Andrzej Duda") String search, Model model) {
         SearchResults sr = twitter.searchOperations().search(search);
         List<Tweet> tweets = sr.getTweets();
         model.addAttribute("tweets", tweets);
         model.addAttribute("search", search);
-    return "resultPage";
+        return "resultPage";
     }
-    
-    
 }
